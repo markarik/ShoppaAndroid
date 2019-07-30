@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
+        
     android:backgroundTint="@color/colorPrimaryDark"
     app:fabCradleVerticalOffset="12dp"
     app:fabCradleRoundedCornerRadius="0dp"
@@ -37,11 +38,13 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:src="@drawable/ic_home_black_24dp"
+        android:tint="@color/colorGray"
         android:layout_marginEnd="16dp"
         android:layout_height="wrap_content" />
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:src="@drawable/ic_heart"
+        android:tint="@color/colorGray"
         android:layout_marginEnd="16dp"
         android:layout_height="wrap_content" />
     ​
