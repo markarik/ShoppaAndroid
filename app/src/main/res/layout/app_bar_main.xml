@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,14 +23,37 @@
 
     <include layout="@layout/content_main" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomApp"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        app:fabAlignmentMode="end"
+    android:backgroundTint="@color/colorPrimaryDark"
+    app:fabCradleVerticalOffset="12dp"
+    app:fabCradleRoundedCornerRadius="0dp"
+    app:hideOnScroll="true"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_home_black_24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_heart"
+        android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content" />
+    ​
+</com.google.android.material.bottomappbar.BottomAppBar>
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab"
+android:layout_width="wrap_content"
+android:src="@drawable/cart2"
+android:tint="@color/cardview_light_background"
+app:layout_anchor="@id/bottomApp"
+android:layout_height="wrap_content" />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
