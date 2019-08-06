@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.DynamicFragment"
+    android:orientation="vertical">
+    <include layout="@layout/content_loading"/>
+    <include layout="@layout/content_error_layout"/>
+    ​
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_number"/>
+    ​
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/electronics_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        ​
+    </androidx.recyclerview.widget.RecyclerView>
+    ​
+</LinearLayout>
