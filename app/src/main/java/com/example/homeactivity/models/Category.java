@@ -2,8 +2,11 @@ package com.example.homeactivity.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 
+@Entity public class Category {
+@Id long id;
 
     @SerializedName("name")
     private  String name;

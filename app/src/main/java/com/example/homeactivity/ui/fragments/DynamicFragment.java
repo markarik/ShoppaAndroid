@@ -33,55 +33,38 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class DynamicFragment extends Fragment {
-​
-        ​
     public DynamicFragment() {
         // Required empty public constructor
     }
-​
     private List<Product> mProductList = new ArrayList<>();
     private ArrayList<Product> categoryProducts = new ArrayList<>();
     private MyRecyclerViewAdapter mMyRecyclerViewAdapter;
-
-
     int val;
     String fragment_name;
-​
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-​
     }
-​
     @Override
     public void onResume() {
         super.onResume();
         getCategorisedProducts();
     }
-​
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-​
         View view = inflater.inflate(R.layout.fragment_dynamic,container,false);
         RecyclerView recyclerView = view.findViewById(R.id.electronics_recycler_view);
 
         //populateRecyclerView();
         recyclerView.hasFixedSize();
-​
-​
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-
         mMyRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),categoryProducts);
-​
         recyclerView.setAdapter(mMyRecyclerViewAdapter);
-​
         TextView fragment_number = view.findViewById(R.id.fragment_number);
         val = getArguments().getInt("someInt",0);
         fragment_number.setText(" "+val);
-​
         return view;
-​
     }
     public static DynamicFragment newInstance(int val, String fragmentname) {
         DynamicFragment fragment = new DynamicFragment();
@@ -89,7 +72,6 @@ public class DynamicFragment extends Fragment {
         args.putInt("someInt", val);
         args.putString("fragment_name",fragmentname);
         fragment.setArguments(args);
-​
         return fragment;
     }
 
@@ -100,20 +82,17 @@ public class DynamicFragment extends Fragment {
         Call<List<Product>> call = RetrofitClient.getInstance(getActivity())
                 .getApiConnector()
                 .getProducts(fragment_name);
-​
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
 
                 if(response.code() == 200)
                 {
-​
                     categoryProducts.clear();
                     mProductList.clear();
                     mProductList.addAll(response.body());
                     categoryProducts.addAll(mProductList);
                     mMyRecyclerViewAdapter.notifyDataSetChanged();
-
                 }
                 else
                 {
@@ -121,7 +100,6 @@ public class DynamicFragment extends Fragment {
                             Toast.LENGTH_LONG).show();
                 }
             }
-​
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
 
@@ -132,7 +110,6 @@ public class DynamicFragment extends Fragment {
                 else
                 {
                     Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-​
                 }
             }
         });

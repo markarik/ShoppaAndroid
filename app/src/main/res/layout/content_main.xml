@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/main_tab"
-            app:tabMode="auto"
+
             style="@style/Theme.AppCompat.DayNight.DarkActionBar">
             ​
         </com.google.android.material.tabs.TabLayout>
