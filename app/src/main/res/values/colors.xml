@@ -7,4 +7,5 @@
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000</color>
     <color name="colorAccent2">#fff</color>
+    <color name="colorWhiteTranslucent">#EDFFFFFF</color>
 </resources>

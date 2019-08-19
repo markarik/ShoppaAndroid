@@ -36,7 +36,7 @@ public class TabAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         for(int index = 1; index<categories.size()+1; index++){
             String fragmentname = categories.get(position).getName();
-            Toast.makeText(mContext, "frag: "+fragmentname,Toast.LENGTH_LONG).show();
+//            Toast.makeText(mContext, "frag: "+fragmentname,Toast.LENGTH_LONG).show();
             Log.d("getItem",categories.get(index).getName());
             return DynamicFragment.newInstance(position,fragmentname);
         }

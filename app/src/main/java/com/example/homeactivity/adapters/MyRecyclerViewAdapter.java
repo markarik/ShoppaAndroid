@@ -1,6 +1,7 @@
 package com.example.homeactivity.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.homeactivity.R;
 import com.example.homeactivity.models.Product;
+import com.example.homeactivity.ui.activities.ProductDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -43,9 +45,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Product product = mProductArrayList.get(position);
         holder.product_price.setText(product.getUnitCost());
         holder.striked_product_price.setText(product.getUnitCost());
-        Glide.with(mContext).load("http://192.168.100.9:8000"+product.getFeaturedImageUrl())
+        Glide.with(mContext).load(product.getFeaturedImageUrl())
                 .placeholder(R.drawable.cart).into(holder.productImage);
-        Toast.makeText(mContext, product.getFeaturedImageUrl(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(mContext, product.getFeaturedImageUrl(), Toast.LENGTH_LONG).show();
         holder.cart_icon.setImageResource(product.getCart_icon());
         holder.wishlist_icon.setImageResource(product.getWishlist());
         holder.mCurrentPosition = position;
@@ -70,6 +72,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             cart_icon = itemView.findViewById(R.id.cart_icon);
             wishlist_icon = itemView.findViewById(R.id.wish_list_icon);
             cart_icon.setOnClickListener(this);
+            wishlist_icon = itemView.findViewById(R.id.wish_list_icon);
+         itemView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(mContext, ProductDetailsActivity.class);
+                 intent.putExtra (CURRENT_POSITION_VALUE,mProductArrayList.get(mCurrentPosition));
+                 mContext.startActivity(intent);
+             }
+         });
 }
         @Override
         public void onClick(View view) {

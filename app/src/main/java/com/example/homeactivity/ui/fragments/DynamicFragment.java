@@ -81,7 +81,7 @@ public class DynamicFragment extends Fragment {
         fragment_name = getArguments().getString("fragment_name",fragment_name);
         Call<List<Product>> call = RetrofitClient.getInstance(getActivity())
                 .getApiConnector()
-                .getProducts(fragment_name);
+                .getProducts();
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -96,21 +96,21 @@ public class DynamicFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "Code: "+response.code(),
-                            Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "Code: "+response.code(),
+//                            Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
 
-                if (t instanceof IOException)
-                {
-                    Toast.makeText(getActivity(), "network failure", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-                }
+//                if (t instanceof IOException)
+//                {
+//                    Toast.makeText(getActivity(), "network failure", Toast.LENGTH_LONG).show();
+//                }
+//                else
+//                {
+//                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
+//                }
             }
         });
     }

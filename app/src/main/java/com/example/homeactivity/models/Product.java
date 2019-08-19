@@ -1,9 +1,12 @@
 package com.example.homeactivity.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+public class Product implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -25,6 +28,38 @@ public class Product {
     private String featuredImageUrl;
     private int cart_icon;
     private int wishlist;
+
+    protected Product(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        shortDescription = in.readString();
+        if (in.readByte() == 0) {
+            brand = null;
+        } else {
+            brand = in.readInt();
+        }
+        unitCost = in.readString();
+        featuredImageUrl = in.readString();
+        cart_icon = in.readInt();
+        wishlist = in.readInt();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
     public int getCart_icon() {
         return cart_icon;
     }
@@ -72,5 +107,32 @@ public class Product {
     }
     public void setFeaturedImageUrl(String featuredImageUrl) {
         this.featuredImageUrl = featuredImageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(name);
+        dest.writeString(shortDescription);
+        if (brand == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(brand);
+        }
+        dest.writeString(unitCost);
+        dest.writeString(featuredImageUrl);
+        dest.writeInt(cart_icon);
+        dest.writeInt(wishlist);
     }
 }

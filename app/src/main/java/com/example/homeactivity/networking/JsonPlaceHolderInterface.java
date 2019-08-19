@@ -4,16 +4,13 @@ import com.example.homeactivity.models.Product;
 
 import java.util.List;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface JsonPlaceHolderInterface {
     //    @FormUrlEncoded
-    @GET("api/categories")
+    @GET("android/category")
     Call<List<Category>> getCategories();
-    @GET("api/category/products/{category}")
-    Call<List<Product>> getProducts(@Path("category") String category);
+    @GET("android/product")
+    Call<List<Product>> getProducts();
 }
