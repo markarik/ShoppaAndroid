@@ -164,4 +164,5 @@
             android:text="Register"
             android:textColor="@color/colorBlack" />
     </LinearLayout>
+    <include layout="@layout/content_progress_bar"/>
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +20,9 @@ import com.example.homeactivity.models.LoginModel;
 import com.example.homeactivity.models.UsersModel;
 import com.example.homeactivity.networking.RetrofitClient;
 import com.example.homeactivity.ui.activities.ProductActivity;
+import com.example.homeactivity.utils.Constants;
 import com.example.homeactivity.utils.SharedPreferencesConfig;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +31,8 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    RelativeLayout loadinLyr;
     Button buttonLogin, buttonSkipLogin;
     TextView redirectRegister, redirectForgotPassword;
     EditText usernameInputText, passwordInputText;
@@ -39,14 +42,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private SharedPreferencesConfig sharedPreferencesConfig;
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferencesConfig.isloggedIn()){
+            welcome();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sharedPreferencesConfig = new SharedPreferencesConfig(getApplicationContext());
+        loadinLyr =findViewById(R.id.progressLyt);
+
+                sharedPreferencesConfig = new SharedPreferencesConfig(getApplicationContext());
+
+
 
         buttonLogin = findViewById(R.id.button_login);
         buttonSkipLogin = findViewById(R.id.button_skip_login);
@@ -95,11 +108,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login(){
+        showProgress();
         String username = usernameInputText.getText().toString();
         String password = passwordInputText.getText().toString();
 
-//        UserClient userClient = ServiceGenerator.createService(UserClient.class, username, password);
-//        Call<UsersModel> call = userClient.basicLogin();
+
 
         LoginModel login = new LoginModel(username,password);
         Call<UsersModel> call = RetrofitClient.getInstance(mContext)
@@ -109,6 +122,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         call.enqueue(new Callback<UsersModel>() {
             @Override
             public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
+
+                hideProgress();
                 if (response.isSuccessful()){
                     Toast.makeText(LoginActivity.this,response.body().getToken(), Toast.LENGTH_SHORT).show();
                     token = response.body().getToken();
@@ -117,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     buyerlastname = response.body().getLastName();
                     email = response.body().getEmail();
 
-                    sharedPreferencesConfig.saveAuthenticationInformation(token,buyerusername,buyerfirstname, buyerlastname,email,"Active");
+                    sharedPreferencesConfig.saveAuthenticationInformation(token,buyerusername,buyerfirstname, buyerlastname,email, Constants.ACTIVE_CONSTANTS);
 
                     welcome();
 
@@ -129,6 +144,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<UsersModel> call, Throwable t) {
+
+                hideProgress();
                 Toast.makeText(LoginActivity.this,"error", Toast.LENGTH_SHORT).show();
                 Log.d("Error", "Another One");
             }
@@ -140,8 +157,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void welcome() {
         Intent intent = new Intent(this, ProductActivity.class);
         startActivity(intent);
-        Toast.makeText(this,"Welcome To Shoppy",Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    private  void showProgress(){
+        loadinLyr.setVisibility(View.VISIBLE);
+    }
+
+
+    private  void hideProgress(){
+        loadinLyr.setVisibility(View.GONE);
     }
 
 }

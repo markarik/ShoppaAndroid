@@ -67,7 +67,15 @@ public class SharedPreferencesConfig {
         return status;
     }
     public  boolean isloggedIn(){
-        return readBuyerStatus()!="Active"?false:true;
+//        return readBuyerStatus()!="Active"?false:true;
+        return readBuyerStatus().equals(Constants.ACTIVE_CONSTANTS);
+    }
+
+    public void logout( ) {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear().apply();
+
     }
 }
 
