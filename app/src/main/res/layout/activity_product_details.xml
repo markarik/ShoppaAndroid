@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:layout_height="match_parent"
     android:background="@color/colorAccent2"
-    tools:context=".ui.activities.ProductActivity">
+    tools:context=".ui.activities.ProductDetailsActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
@@ -232,6 +232,7 @@
                             android:background="@drawable/btn_rounded"
                             android:text="BUY NOW!"
                             android:textColor="@color/colorWhite"
+                            android:backgroundTint="@color/colorPrimary"
                             tools:ignore="RtlCompat"/>
 
                     </androidx.cardview.widget.CardView>
@@ -303,6 +304,7 @@
                             android:text="@string/add_to_wishlist"
                             android:textColor="@color/colorWhite"
                             style="@style/TextAppearance.AppCompat.Widget.Button"
+                            android:backgroundTint="@color/colorPrimary"
                             tools:ignore="RtlCompat"/>
                     </LinearLayout>
 
@@ -319,7 +321,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Description" />
+                android:text="Description"
+                android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
 

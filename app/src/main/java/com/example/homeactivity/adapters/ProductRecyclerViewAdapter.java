@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,44 +18,46 @@ import com.example.homeactivity.ui.activities.ProductDetailsActivity;
 
 import java.util.ArrayList;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>
-{
-    public static final String CURRENT_POSITION_VALUE =" tech.muva.academy.android_shoppa.current_position" ;
+public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder> {
+    public static final String CURRENT_POSITION_VALUE = " tech.muva.academy.android_shoppa.current_position";
     @NonNull
     private Context mContext;
     private LayoutInflater inflater;
     //public static  ArrayList<Testproduct> mProductArrayList;
     public static ArrayList<Product> mProductArrayList;
     public static final int CURRENT_POSITION = 361;
-    public MyRecyclerViewAdapter(@NonNull Context context, ArrayList<Product> productArrayList) {
+
+    public ProductRecyclerViewAdapter(@NonNull Context context, ArrayList<Product> productArrayList) {
         mContext = context;
         mProductArrayList = productArrayList;
     }
+
     @Override
-    public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public ProductRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_product_list,parent,false);
+                .inflate(R.layout.item_product_list, parent, false);
         return new ViewHolder(view);
     }
+
     @Override
-    public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(@NonNull ProductRecyclerViewAdapter.ViewHolder holder, int position) {
         Product product = mProductArrayList.get(position);
-        holder.product_price.setText(product.getUnitCost());
-        holder.striked_product_price.setText(product.getUnitCost());
+        holder.product_price.setText(product.getUnitCost() + "kSH");
+        holder.striked_product_price.setText(product.getUnitCost() + "kSH");
         Glide.with(mContext).load(product.getFeaturedImageUrl())
                 .placeholder(R.drawable.cart).into(holder.productImage);
 //        Toast.makeText(mContext, product.getFeaturedImageUrl(), Toast.LENGTH_LONG).show();
+        holder.product_name.setText(product.getName());
         holder.cart_icon.setImageResource(product.getCart_icon());
         holder.wishlist_icon.setImageResource(product.getWishlist());
         holder.mCurrentPosition = position;
     }
+
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mProductArrayList.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView productImage, cart_icon, wishlist_icon;
         TextView product_price;
@@ -71,17 +72,19 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             striked_product_price = itemView.findViewById(R.id.striked_product_price);
             cart_icon = itemView.findViewById(R.id.cart_icon);
             wishlist_icon = itemView.findViewById(R.id.wish_list_icon);
+            product_name =itemView.findViewById(R.id.product_name_recy);
             cart_icon.setOnClickListener(this);
             wishlist_icon = itemView.findViewById(R.id.wish_list_icon);
-         itemView.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent intent = new Intent(mContext, ProductDetailsActivity.class);
-                 intent.putExtra (CURRENT_POSITION_VALUE,mProductArrayList.get(mCurrentPosition));
-                 mContext.startActivity(intent);
-             }
-         });
-}
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, ProductDetailsActivity.class);
+                    intent.putExtra(CURRENT_POSITION_VALUE, mProductArrayList.get(mCurrentPosition));
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+
         @Override
         public void onClick(View view) {
             int itemId = view.getId();

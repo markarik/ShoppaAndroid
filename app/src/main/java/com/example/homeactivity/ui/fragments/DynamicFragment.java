@@ -13,15 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.homeactivity.R;
-import com.example.homeactivity.adapters.MyRecyclerViewAdapter;
+import com.example.homeactivity.adapters.ProductRecyclerViewAdapter;
 import com.example.homeactivity.models.Product;
 import com.example.homeactivity.networking.RetrofitClient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class DynamicFragment extends Fragment {
     }
     private List<Product> mProductList = new ArrayList<>();
     private ArrayList<Product> categoryProducts = new ArrayList<>();
-    private MyRecyclerViewAdapter mMyRecyclerViewAdapter;
+    private ProductRecyclerViewAdapter mMyRecyclerViewAdapter;
     int val;
     String fragment_name;
     @Override
@@ -58,12 +56,13 @@ public class DynamicFragment extends Fragment {
 
         //populateRecyclerView();
         recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        mMyRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),categoryProducts);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),
+                getResources().getInteger(R.integer.product_grid_span)));
+        mMyRecyclerViewAdapter = new ProductRecyclerViewAdapter(getActivity(),categoryProducts);
         recyclerView.setAdapter(mMyRecyclerViewAdapter);
-        TextView fragment_number = view.findViewById(R.id.fragment_number);
+
         val = getArguments().getInt("someInt",0);
-        fragment_number.setText(" "+val);
+
         return view;
     }
     public static DynamicFragment newInstance(int val, String fragmentname) {

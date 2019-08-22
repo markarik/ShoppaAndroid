@@ -23,7 +23,7 @@ public class Product implements Parcelable {
     @SerializedName("unit_cost")
     @Expose
     private String unitCost;
-    @SerializedName("featured_image_url")
+    @SerializedName("featured_url")
     @Expose
     private String featuredImageUrl;
     private int cart_icon;

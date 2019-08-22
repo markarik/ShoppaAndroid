@@ -8,12 +8,11 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.example.homeactivity.R;
-import com.example.homeactivity.adapters.MyRecyclerViewAdapter;
+import com.example.homeactivity.adapters.ProductRecyclerViewAdapter;
 import com.example.homeactivity.adapters.ViewPagerAdapter;
 import com.example.homeactivity.models.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
-
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +37,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 public class ProductDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int DEFAULT_INITIAL_POSITION = -1;
@@ -57,9 +55,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     private TextView productPrice;
     private TextView productStrikedPrice;
     private TextView productDescription;
+    private TextView toolbar_title;
     ViewPagerAdapter viewPagerAdapter;
     NumberPicker numberPicker;
-    private int maxInventoryQuantity = 20, minInventoryQuantity= 1;
+    private int maxInventoryQuantity = 20, minInventoryQuantity = 1;
 
 
     @Override
@@ -74,8 +73,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         contentView = findViewById(R.id.content_description);
         loadingView = findViewById(R.id.content_image);
         viewPager = findViewById(R.id.myViewPager);
-        tabLayout=findViewById(R.id.tab_layout);
-        productImage=findViewById(R.id.detail_product_image);
+        tabLayout = findViewById(R.id.tab_layout);
+        productImage = findViewById(R.id.detail_product_image);
         ImageButton backPressed = findViewById(R.id.action_back);
         RatingBar ratingBar = findViewById(R.id.rating);
         ImageView wishlist = findViewById(R.id.product_add_wishlist);
@@ -85,11 +84,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         productName = findViewById(R.id.product_name);
         productPrice = findViewById(R.id.product_price_recy);
 
-
+        toolbar_title=findViewById(R.id.toolbar_title);
         viewPagerAdapter = new ViewPagerAdapter(this);
         //ViewPagerAdapter.images = new Integer[]{R.drawable.pager1,R.drawable.pager2,R.drawable.pager4};
         //viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager,true);
+        tabLayout.setupWithViewPager(viewPager, true);
 
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         buyProduct.setOnClickListener(this);
@@ -98,8 +97,6 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         backPressed.setOnClickListener(this);
         wishlist.setOnClickListener(this);
         cart.setOnClickListener(this);
-
-
 
 
         // Initially hide the content view.
@@ -117,15 +114,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         mRelativeLayout = findViewById(R.id.rl);
 
 
-
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(getIntent().hasExtra(MyRecyclerViewAdapter.CURRENT_POSITION_VALUE)){
-            product=getIntent().getParcelableExtra(MyRecyclerViewAdapter.CURRENT_POSITION_VALUE);
+        if (getIntent().hasExtra(ProductRecyclerViewAdapter.CURRENT_POSITION_VALUE)) {
+            product = getIntent().getParcelableExtra(ProductRecyclerViewAdapter.CURRENT_POSITION_VALUE);
             fillData();
         }
     }
@@ -144,11 +140,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                     break;
                 case R.id.heart:
-                    Toast.makeText(ProductDetailsActivity.this,"This goes somewhere",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProductDetailsActivity.this, "This goes somewhere", Toast.LENGTH_SHORT).show();
 
                     break;
                 case R.id.navigation_cart:
-                    Toast.makeText(ProductDetailsActivity.this,"This goes somewhere",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProductDetailsActivity.this, "This goes somewhere", Toast.LENGTH_SHORT).show();
 
                     break;
             }
@@ -157,35 +153,24 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     };
 
 
-
-
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
 
         if (id == R.id.buy_product) {
-            Intent intent = new Intent(this, ProductActivity.class);
-            startActivity(intent);
-            Toast.makeText(ProductDetailsActivity.this,"You have just been Served!",Toast.LENGTH_SHORT).show();
-            finish();
+            addingItemQuantityPopUp();
 
-        }
-        else if (id == R.id.toggle_description){
+        } else if (id == R.id.toggle_description) {
             toggleDescriptionVisibility();
-        }
-        else if(id == R.id.rating){
-            Toast.makeText(ProductDetailsActivity.this,"You can only rate it when you buy it",Toast.LENGTH_SHORT).show();
-        }
-        else if(id == R.id.product_add_wishlist){
-            Toast.makeText(ProductDetailsActivity.this,"Added to Wish List",Toast.LENGTH_SHORT).show();
-        }
-        else if(id == R.id.action_back){
+        } else if (id == R.id.rating) {
+            Toast.makeText(ProductDetailsActivity.this, "You can only rate it when you buy it", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.product_add_wishlist) {
+            Toast.makeText(ProductDetailsActivity.this, "Added to Wish List", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_back) {
             Intent intent = new Intent(ProductDetailsActivity.this, ProductActivity.class);
             startActivity(intent);
             finish();
-        }
-        else if(id == R.id.product_add_cart){
+        } else if (id == R.id.product_add_cart) {
             addingItemQuantityPopUp();
         }
     }
@@ -195,7 +180,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
 
         // Inflate the custom layout/view
-        View customView = inflater.inflate(R.layout.item_quantity_pop_up_layout,null);
+        View customView = inflater.inflate(R.layout.item_quantity_pop_up_layout, null);
 
         numberPicker = customView.findViewById(R.id.numberPicker);
 
@@ -213,7 +198,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
         // Set an elevation value for popup window
         // Call requires API level 21
-        if(Build.VERSION.SDK_INT>=21){
+        if (Build.VERSION.SDK_INT >= 21) {
             mPopupWindow.setElevation(5.0f);
         }
 
@@ -223,7 +208,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         addQuantityFromPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProductDetailsActivity.this,"Added to Cart",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductDetailsActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
                 mPopupWindow.dismiss();
             }
         });
@@ -239,19 +224,19 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         });
 
 
-        mPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+        mPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER, 0, 0);
     }
 
 
     private void toggleDescriptionVisibility() {
         Button toggleDescription = findViewById(R.id.toggle_description);
 
-        if(toggleDescription.getText().toString().equals("Description")){
+        if (toggleDescription.getText().toString().equals("Description")) {
             contentView.setAlpha(1f);
             contentView.setVisibility(View.VISIBLE);
             loadingView.scrollTo(0, loadingView.getBottom());
             toggleDescription.setText("Hide Description");
-        }else{
+        } else {
             contentView.setAlpha(0f);
             contentView.setVisibility(View.GONE);
             loadingView.scrollTo(0, loadingView.getBottom());
@@ -260,17 +245,16 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     }
 
 
+    private void fillData() {
 
-    private void fillData(){
-
-        ViewPagerAdapter.images = new String[]{"http://192.168.100.14:8000"+product.getFeaturedImageUrl()};
+        ViewPagerAdapter.images = new String[]{product.getFeaturedImageUrl()};
         productName.setText(product.getName());
         productPrice.setText(product.getUnitCost());
         productStrikedPrice.setText(product.getUnitCost());
         productDescription.setText(product.getShortDescription());
-
+toolbar_title.setText(product.getName());
         viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager,true);
+        tabLayout.setupWithViewPager(viewPager, true);
 
     }
 
