@@ -9,12 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homeactivity.R;
+import com.example.homeactivity.auth.LoginDialogFragment;
 import com.example.homeactivity.models.Product;
 import com.example.homeactivity.ui.activities.ProductDetailsActivity;
+import com.example.homeactivity.utils.SharedPreferencesConfig;
 
 import java.util.ArrayList;
 
@@ -27,9 +30,13 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
     public static ArrayList<Product> mProductArrayList;
     public static final int CURRENT_POSITION = 361;
 
-    public ProductRecyclerViewAdapter(@NonNull Context context, ArrayList<Product> productArrayList) {
+    private FragmentManager mFragmentManager;
+
+    public ProductRecyclerViewAdapter(@NonNull Context context, ArrayList<Product> productArrayList,FragmentManager fragmentManager) {
         mContext = context;
         mProductArrayList = productArrayList;
+        mFragmentManager = fragmentManager;
+
     }
 
     @Override
@@ -48,8 +55,7 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
                 .placeholder(R.drawable.cart).into(holder.productImage);
 //        Toast.makeText(mContext, product.getFeaturedImageUrl(), Toast.LENGTH_LONG).show();
         holder.product_name.setText(product.getName());
-        holder.cart_icon.setImageResource(product.getCart_icon());
-        holder.wishlist_icon.setImageResource(product.getWishlist());
+
         holder.mCurrentPosition = position;
     }
 
@@ -83,11 +89,21 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
                     mContext.startActivity(intent);
                 }
             });
+
+
         }
 
         @Override
         public void onClick(View view) {
             int itemId = view.getId();
+
+            if (itemId == R.id.cart_icon){
+                if (!new SharedPreferencesConfig(mContext).isloggedIn()){
+                    new LoginDialogFragment(mContext).startDialog(mFragmentManager);
+                }else{
+                    //add to cart
+                }
+            }
 
         }
     }

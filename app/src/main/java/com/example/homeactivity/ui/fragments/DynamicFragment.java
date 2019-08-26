@@ -58,7 +58,7 @@ public class DynamicFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),
                 getResources().getInteger(R.integer.product_grid_span)));
-        mMyRecyclerViewAdapter = new ProductRecyclerViewAdapter(getActivity(),categoryProducts);
+        mMyRecyclerViewAdapter = new ProductRecyclerViewAdapter(getActivity(),categoryProducts,getFragmentManager());
         recyclerView.setAdapter(mMyRecyclerViewAdapter);
 
         val = getArguments().getInt("someInt",0);
