@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.homeactivity.R;
 import com.example.homeactivity.auth.LoginDialogFragment;
+import com.example.homeactivity.datamanagers.CartManager;
 import com.example.homeactivity.models.Product;
 import com.example.homeactivity.ui.activities.ProductDetailsActivity;
 import com.example.homeactivity.utils.SharedPreferencesConfig;
@@ -102,6 +103,8 @@ public class ProductRecyclerViewAdapter extends RecyclerView.Adapter<ProductRecy
                     new LoginDialogFragment(mContext).startDialog(mFragmentManager);
                 }else{
                     //add to cart
+                    new CartManager(mContext).add(mProductArrayList.get(mCurrentPosition).getId(),1);
+
                 }
             }
 

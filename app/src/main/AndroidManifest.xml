@@ -12,19 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".auth.ResetPasswordActivity"></activity>
+        <activity android:name=".ui.activities.CartActivity"></activity>
+        <activity android:name=".auth.ResetPasswordActivity" />
         <activity android:name=".auth.RegisterActivity" />
         <activity
             android:name=".ui.activities.ProductDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.ProductActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.activities.SplashScreen"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,6 @@
 package com.example.homeactivity.networking;
+import com.example.homeactivity.models.Cart;
+import com.example.homeactivity.models.CartResponse;
 import com.example.homeactivity.models.Category;
 import com.example.homeactivity.models.ChangePassword;
 import com.example.homeactivity.models.LoginModel;
@@ -28,4 +30,17 @@ public interface JsonPlaceHolderInterface {
 
     @POST("rest_auth/password/change/")
     Call<UsersModel> changePassword(@Header("Authorization") String Token, @Body ChangePassword changePassword);
+
+    //cart endpoints
+    @GET("android/getcartproducts")
+    Call<List<CartResponse>> getCart();
+    @POST("android/addtocart/{product_id}/")
+    Call<List<CartResponse>> addToCart(@Path ("product_id") int productId, @Body Cart cart);
+    @POST("android/updatecart/{order_id}/")
+    Call<List<CartResponse>> updateCart(@Path ("order_id") int orderId, @Body int quantity);
+    @POST("android/removefromcart/{order_id}")
+    Call<List<CartResponse>> removeCart(@Path("order_id") int orderId);
+
+
+
 }

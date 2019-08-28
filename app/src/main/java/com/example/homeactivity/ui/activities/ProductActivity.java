@@ -6,18 +6,27 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.homeactivity.R;
 import com.example.homeactivity.adapters.TabAdapter;
+import com.example.homeactivity.auth.LoginDialogFragment;
 import com.example.homeactivity.ui.fragments.DynamicFragment;
+import com.example.homeactivity.utils.SharedPreferencesConfig;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class ProductActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    public static ImageView bottoAppBarCart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +35,19 @@ public class ProductActivity extends AppCompatActivity
         setSupportActionBar(mainToolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        bottoAppBarCart = findViewById(R.id.bottm_cartmage);
+
+        bottoAppBarCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!new SharedPreferencesConfig(ProductActivity.this).isloggedIn()){
+                    new LoginDialogFragment(ProductActivity.this).startDialog(getSupportFragmentManager());
+                }else{
+                    startActivity(new Intent(ProductActivity.this, CartActivity.class));
+                }
+            }
+        });
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mainToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);

@@ -77,7 +77,18 @@
         <item name="android:textStyle">bold</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
-
+    <style name="roundedStartBtn">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+    <style name="roundedEndBtn">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
 
 
 </resources>
